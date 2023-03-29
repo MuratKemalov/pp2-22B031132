@@ -1,62 +1,49 @@
-from pygame import mixer as mix
-import pygame as pg
-import os
-from sys import exit
-from tkinter import *
-from tkinter import filedialog
+import pygame
 
 
-pg.init()
-mix.init()
-clock=pg.time.Clock()
+pygame.init()
+FPS=pygame.time.Clock()
 
-screen=pg.display.set_mode((500, 250))
-pg.display.set_caption("music player")
+sc=pygame.display.set_mode((1000, 800))
+pygame.display.set_caption("music player")
 
 Playlist=['first.mp3', 'second.mp3', 'third.mp3']
-currid=0
-currsong=pg.mixer.music.load(Playlist[currid])
-pg.mixer.music.play()
-pg.mixer.music.pause()
-ch=False
-ch1=False
-ch2=False
-tm=0
-tm2=0
+curm=0
+curs=pygame.mixer.music.load(Playlist[curm])
+pygame.mixer.music.play()
+pygame.mixer.music.pause()
+m1 = m2 = m3 = False
 
 while True:
-    for event in pg.event.get():
-        if event.type==pg.QUIT:
-            pg.quit()
+    for event in pygame.event.get():
+        if event.type==pygame.QUIT:
             exit()
-        elif event.type==pg.KEYDOWN:
-            if event.key==pg.K_SPACE:
-                if(ch):
-                    pg.mixer.music.pause()
-                    ch=0
+        
+        elif event.type==pygame.KEYDOWN:
+            if event.key==pygame.K_SPACE:
+                if(m1):
+                    pygame.mixer.music.pause()
+                    m1=0
                 else:
-                    pg.mixer.music.unpause()
-                    ch=1
-            if event.key==pg.K_RIGHT:
-                currid=(currid+1)%3
-                pg.mixer.music.stop()
-                pg.mixer.music.load(Playlist[currid])
-                pg.mixer.music.play()
-                ch1=True
-                if not ch :
-                    pg.mixer.music.pause()
-            if event.key==pg.K_LEFT:
-                currid=(currid-1+3)%3
-                pg.mixer.music.stop()
-                pg.mixer.music.load(Playlist[currid])
-                pg.mixer.music.play()
-                ch2=True
-                if not ch :
-                    pg.mixer.music.pause()
+                    pygame.mixer.music.unpause()
+                    m1=1
+            if event.key==pygame.K_RIGHT:
+                curm=(curm+1)%3
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load(Playlist[curm])
+                pygame.mixer.music.play()
+                m2=True
+                if not m1 :
+                    pygame.mixer.music.pause()
+            if event.key==pygame.K_LEFT:
+                curm=(curm-1+3)%3
+                pygame.mixer.music.stop()
+                pygame.mixer.music.load(Playlist[curm])
+                pygame.mixer.music.play()
+                m3=True
+                if not m1 :
+                    pygame.mixer.music.pause()
                    
 
-
-                  
-   
-    pg.display.update()
-    clock.tick(60)
+    pygame.display.update()
+    FPS.tick(60)
